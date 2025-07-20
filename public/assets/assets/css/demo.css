@@ -105,3 +105,20 @@
   text-align: center;
   margin-top: 1rem;
 }
+
+
+ /* Override active page background from info to warning */
+    .btns {
+        background-color: #c34e4f !important;   /* Bootstrap warning color */
+        color: #ffffff !important;
+        border: 1px solid #c34e4f !important;
+    }
+    .btns:hover {
+        background-color: #9a3335 !important; /* Darker warning on hover */
+        color: #ffffff !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+        background-color: #e0a800 !important; /* Darker warning on hover */
+        color: #000 !important;
+    }

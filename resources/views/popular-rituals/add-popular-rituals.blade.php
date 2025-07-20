@@ -1,19 +1,19 @@
 @extends('Layout.main')
 @section('middle_content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('dharamshala') }}"
-                    class="text-dark">Dharamshala</a> /</span> Add Dharamshala</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('popular-rituals') }}"
+                    class="text-dark">Popular Rituals</a> /</span> Add Popular Rituals</h4>
 
         <!-- Basic Layout -->
         <div class="row">
             <div class="col-xl">
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Add Dharamshala</h5>
+                        <h5 class="mb-0">Add Popular Ritual</h5>
 
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('add-store-dharamshala') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('add-store-popular-rituals') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <!-- Title -->
                             <div class="mb-3">
@@ -66,7 +66,7 @@
                             </button>
 
                             <button type="button" class="btn btn-secondary">
-                                <a class="text-white" href="{{ route('dharamshala') }}"> <i class="bx bx-x"></i> Cancel</a>
+                                <a class="text-white" href="{{ route('popular-rituals') }}"> <i class="bx bx-x"></i> Cancel</a>
                             </button>
                         </form>
 

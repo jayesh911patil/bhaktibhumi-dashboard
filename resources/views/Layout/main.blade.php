@@ -70,44 +70,73 @@
     </div>
     <!-- / Layout wrapper -->
 
+    
+
+
    @include('Layout.footer-link')
 
    <script>
     @if(session('success'))
-        Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: "{{ session('success') }}",
-            confirmButtonColor: '#3085d6',
-            timer: 2500
-        });
-    @endif
+    Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: "{{ session('success') }}",
+      confirmButtonColor: '#c34e4f',
+      timer: 2500
+    });
+  @endif
 
     @if(session('error'))
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: "{{ session('error') }}",
-            confirmButtonColor: '#d33'
-        });
-    @endif
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: "{{ session('error') }}",
+      confirmButtonColor: '#d33'
+    });
+  @endif
 
     @if(session('warning'))
-        Swal.fire({
-            icon: 'warning',
-            title: 'Warning!',
-            text: "{{ session('warning') }}"
-        });
-    @endif
+    Swal.fire({
+      icon: 'warning',
+      title: 'Warning!',
+      text: "{{ session('warning') }}"
+    });
+  @endif
 
     @if(session('info'))
-        Swal.fire({
-            icon: 'info',
-            title: 'Note',
-            text: "{{ session('info') }}"
-        });
-    @endif
+    Swal.fire({
+      icon: 'info',
+      title: 'Note',
+      text: "{{ session('info') }}"
+    });
+  @endif
+  </script>
+
+<script>
+  $(document).on('click', '.sweet-delete-btn', function (e) {
+    e.preventDefault();
+    const deleteUrl = $(this).data('url');
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this delete!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#948e8eff',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Redirect to delete URL
+        window.location.href = deleteUrl;
+      }
+    });
+  });
 </script>
+
+
+@stack('script')
 
   </body>
 </html>

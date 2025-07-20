@@ -20,14 +20,23 @@
     <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
       <a href="{{ route('dashboard') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-home-circle"></i>
-        <div data-i18n="Analytics">Dashboard   </div>
+        <div data-i18n="Analytics">Dashboard </div>
       </a>
     </li>
 
-    <li class="menu-item {{ request()->routeIs('dharamshala', 'add-dharamshala') ? 'active' : '' }}">
+    <li
+      class="menu-item {{ request()->routeIs('dharamshala', 'add-dharamshala', 'edit-dharamshala') ? 'active' : '' }}">
       <a href="{{ route('dharamshala') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-building-house"></i>
         <div data-i18n="Analytics">Dharamshala</div>
+      </a>
+    </li>
+
+    <li
+      class="menu-item  {{ request()->routeIs('popular-rituals', 'add-popular-rituals', 'edit-popular-rituals') ? 'active' : '' }}">
+      <a href="{{ route('popular-rituals') }}" class="menu-link">
+         <i class="menu-icon tf-icons bx bx-star"></i>
+        <div data-i18n="Analytics">Popular Rituals</div>
       </a>
     </li>
   </ul>

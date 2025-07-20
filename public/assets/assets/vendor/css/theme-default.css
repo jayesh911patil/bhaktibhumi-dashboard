@@ -132,14 +132,15 @@ a.bg-primary:hover, a.bg-primary:focus {
 .pagination li.active > a:not(.page-link),
 .pagination li.active > a:not(.page-link):hover,
 .pagination li.active > a:not(.page-link):focus {
-  border-color: #696cff;
-  background-color: #696cff;
+  background-color: #c34e4f !important;   /* Bootstrap warning color */
+       
+        border: 1px solid #c34e4f !important;
   color: #fff;
   box-shadow: 0 0.125rem 0.25rem rgba(105, 108, 255, 0.4);
 }
 
 .progress-bar {
-  background-color: #696cff;
+  background-color: #c34e4f;
   color: #fff;
   box-shadow: 0 2px 4px 0 rgba(105, 108, 255, 0.4);
 }

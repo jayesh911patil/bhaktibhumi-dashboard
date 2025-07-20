@@ -2,17 +2,17 @@
 @section('middle_content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('dashboard') }}"
-                    class="text-dark">Dashboard</a> /</span> Dharamshala</h4>
+                    class="text-dark">Dashboard</a> /</span> Popular Rituals</h4>
 
         <!-- Basic Bootstrap Table -->
         <div class="card">
             <div class="row align-items-center py-2 px-3">
                 <div class="col-md-6">
-                    <h5 class="mb-0 head">Dharamshala</h5>
+                    <h5 class="mb-0 head">Popular Rituals</h5>
                 </div>
                 <div class="col-md-6 text-end">
-                    <a href="{{ route('add-dharamshala') }}" class="btn btns text-white">
-                        <b>Add Dharamshala</b>
+                    <a href="{{ route('add-popular-rituals') }}" class="btn btns text-white">
+                        <b>Add Popular Ritual</b>
                     </a>
                 </div>
             </div>
@@ -63,7 +63,7 @@
             $('.yajra-datatables').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('dharamshala.data') }}',
+                ajax: '{{ route('popular-rituals.data') }}',
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false },
                     { data: 'title', name: 'title', orderable: false },

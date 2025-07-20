@@ -87,7 +87,7 @@
                                 <input class="form-check-input" type="checkbox" name="remember" id="remember" />
                                 <label class="form-check-label" for="remember"> Remember me </label>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Login</button>
+                            <button type="submit" class="btn btns w-100">Login</button>
                         </form>
                         @if (session('error'))
                             <div class="alert alert-danger mt-3">

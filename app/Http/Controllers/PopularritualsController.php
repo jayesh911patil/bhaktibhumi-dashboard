@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DharamshalaModel;
+use App\Models\PopularritualsModel;
 use Illuminate\Http\Request;
 use DataTables;
 
-class DharamshalaController extends Controller
+class PopularritualsController extends Controller
 {
-    public function Dharamshala(Request $request)
+    public function Popularrituals()
     {
-        return view('dharamshala.dharamshala');
+        return view('popular-rituals.popular-rituals');
     }
 
-
-    public function DharamshalaData(Request $request)
+    public function PopularritualsData(Request $request)
     {
 
         if ($request->ajax()) {
-            $data = DharamshalaModel::latest()->get();
+            $data = PopularritualsModel::latest()->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -31,8 +30,8 @@ class DharamshalaController extends Controller
                     return '<button type="button" class="btn btn-sm btns view-description" data-bs-toggle="modal" data-bs-target="#descriptionModal" data-description="' . e($row->description) . '">View</button>';
                 })
                 ->addColumn('action', function ($row) {
-                    $editUrl = route('edit-dharamshala', ['dharamshala_id' => $row->dharamshala_id]);
-                    $deleteUrl = route('delete-dharamshala', ['dharamshala_id' => $row->dharamshala_id]);
+                    $editUrl = route('edit-popular-rituals', ['popular_rituals_id' => $row->popular_rituals_id]);
+                    $deleteUrl = route('delete-popular-rituals', ['popular_rituals_id' => $row->popular_rituals_id]);
 
                     $actionBtn = '
         <a href="' . $editUrl . '" class="btn btn-success btn-sm">Edit</a>
@@ -46,12 +45,12 @@ class DharamshalaController extends Controller
         }
     }
 
-    public function Adddharamshala()
+    public function Addpopularrituals()
     {
-        return view('dharamshala.add-dharamshala');
+        return view('popular-rituals.add-popular-rituals');
     }
 
-    public function Addstoredharamshala(Request $request)
+    public function Addstorepopuarrituals(Request $request)
     {
         $validated = $request->validate([
             'title' => 'required',
@@ -61,7 +60,7 @@ class DharamshalaController extends Controller
 
         $identification_proofimg = null;
         if ($request->hasFile('image')) {
-            $path_image = 'dashboard-assets/assets/img/dharamshala/';
+            $path_image = 'dashboard-assets/assets/img/popular-rituals/';
             $file = $request->file('image');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path($path_image), $filename);
@@ -74,19 +73,19 @@ class DharamshalaController extends Controller
             'description' => $request->description
         ];
 
-        DharamshalaModel::create($data);
-        return redirect()->route('dharamshala')->with('success', 'Dharamshala Added successfully!');
+        PopularritualsModel::create($data);
+        return redirect()->route('popular-rituals')->with('success', 'Popular Ritual Added successfully!');
     }
 
-    public function Editdharamshala($dharamshala_id)
+    public function Editpopularrituals($popular_rituals_id)
     {
-        $dharamshala = DharamshalaModel::findOrFail($dharamshala_id);
-        return view('dharamshala.edit-dharamshala', compact('dharamshala'));
+        $popularritual = PopularritualsModel::findOrFail($popular_rituals_id);
+        return view('popular-rituals.edit-popular-rituals', compact('popularritual'));
     }
 
-    public function Editstoredharamshala(Request $request, $dharamshala_id)
+    public function Editstorepopularrituals(Request $request, $popular_rituals_id)
     {
-        $dharamshala = DharamshalaModel::findOrFail($dharamshala_id);
+        $popularritual = PopularritualsModel::findOrFail($popular_rituals_id);
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -94,33 +93,32 @@ class DharamshalaController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $dharamshala->title = $request->title;
-        $dharamshala->description = $request->description;
+        $popularritual->title = $request->title;
+        $popularritual->description = $request->description;
 
         if ($request->hasFile('image')) {
-            $path_image = 'dashboard-assets/assets/img/dharamshala/';
+            $path_image = 'dashboard-assets/assets/img/popular-rituals/';
             $file = $request->file('image');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path($path_image), $filename);
-            $dharamshala->image = $path_image . $filename;
+            $popularritual->image = $path_image . $filename;
         } else {
-            $dharamshala->image = $request->hidden_image;
+            $popularritual->image = $request->hidden_image;
         }
-        $dharamshala->save();
-        return redirect()->route('dharamshala')->with('success', 'Dharamshala updated successfully!');
+        $popularritual->save();
+        return redirect()->route('popular-rituals')->with('success', 'Popular Rituals updated successfully!');
     }
 
-    public function Deletedharamshala($dharamshala_id)
+    public function deletepopularrituals($popular_rituals_id)
     {
-        $dharamshala = DharamshalaModel::findOrFail($dharamshala_id);
+        $popularritual = PopularritualsModel::findOrFail($popular_rituals_id);
 
         // Delete image from public folder if exists
-        if ($dharamshala->image && file_exists(public_path($dharamshala->image))) {
-            unlink(public_path($dharamshala->image));
+        if ($popularritual->image && file_exists(public_path($popularritual->image))) {
+            unlink(public_path($popularritual->image));
         }
 
-        $dharamshala->delete();
-        return redirect()->route('dharamshala')->with('success', 'Dharamshala deleted successfully!');
+        $popularritual->delete();
+        return redirect()->route('popular-rituals')->with('success', 'Popular Rituals deleted successfully!');
     }
-
 }
