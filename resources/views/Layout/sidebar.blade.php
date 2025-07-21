@@ -35,8 +35,16 @@
     <li
       class="menu-item  {{ request()->routeIs('popular-rituals', 'add-popular-rituals', 'edit-popular-rituals') ? 'active' : '' }}">
       <a href="{{ route('popular-rituals') }}" class="menu-link">
-         <i class="menu-icon tf-icons bx bx-star"></i>
+        <i class="menu-icon tf-icons bx bx-star"></i>
         <div data-i18n="Analytics">Popular Rituals</div>
+      </a>
+    </li>
+
+    <li
+      class="menu-item  {{ request()->routeIs('partner-with-us') ? 'active' : '' }}">
+      <a href="{{ route('partner-with-us') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-group"></i>
+        <div data-i18n="Analytics">Partner With Us</div>
       </a>
     </li>
   </ul>

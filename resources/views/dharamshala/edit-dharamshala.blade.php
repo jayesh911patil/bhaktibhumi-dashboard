@@ -1,4 +1,5 @@
 @extends('Layout.main')
+@section('title', 'Edit Dharamshala')
 @section('middle_content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('dharamshala') }}"

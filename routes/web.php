@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PartnerwithusCcontroller;
 use App\Http\Controllers\PopularritualsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -38,6 +39,10 @@ Route::middleware(['auth', Userauth::class, DisableBackBtn::class])->group(funct
         Route::get('edit-popular-rituals/{popular_rituals_id}', 'Editpopularrituals')->name('edit-popular-rituals');
         Route::post('edit-store-popular-rituals/{popular_rituals_id}', 'Editstorepopularrituals')->name('edit-store-popular-rituals');
         Route::get('delete-popular-rituals/{popular_rituals_id}', 'deletepopularrituals')->name('delete-popular-rituals');
+    });
+
+    Route::controller(PartnerwithusCcontroller::class)->group(function () {
+        Route::get('partner-with-us', 'Partnerwithus')->name('partner-with-us');
     });
 });
 
