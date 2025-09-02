@@ -11,13 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-         Schema::create('partner_with_us', function (Blueprint $table) {
+        Schema::create('partner_with_us', function (Blueprint $table) {
             $table->id('partner_with_us_id');
+            $table->string('dharamshala_id')->nullable();
             $table->string('name')->nullable();
-            $table->string('email')->nullable();
+            $table->string('dharamshala_name')->nullable();
             $table->string('phone_number')->nullable();
-            $table->string('dharamshala')->nullable();
-            $table->longText( 'address')->nullable();
+            $table->string('email')->nullable();
+            $table->longText('address')->nullable();
+            $table->longText('dharamshala_address')->nullable();
+            $table->string('auth_sign')->nullable();
+            $table->string('auth_aadhar')->nullable();
+            $table->string('auth_img')->nullable();
+            $table->string('status')->nullable();
+            $table->string('admin_status')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
+use DataTables;
 
 class AuthController extends Controller
 {
@@ -17,7 +19,7 @@ class AuthController extends Controller
 
     public function Login(Request $request)
     {
-        
+
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -45,5 +47,25 @@ class AuthController extends Controller
         session()->regenerateToken();
 
         return redirect()->route('admin')->with('success', 'Logged out successfully');
+    }
+
+
+    public function Users(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = User::latest()->get();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('full_name', fn($row) => $row->full_name ?? 'N/A')
+                ->addColumn('gender', fn($row) => $row->gender ?? 'N/A')
+                ->addColumn('date_of_birth', function ($row) {
+                    return $row->date_of_birth ? \Carbon\Carbon::parse($row->date_of_birth)->format('d-m-Y') : 'N/A';
+                })
+                ->addColumn('phone_number', fn($row) => $row->phone_number ?? 'N/A')
+                ->addColumn('address', fn($row) => $row->address ?? 'N/A')
+                ->make(true);
+        }
+        return view('users.users');
     }
 }

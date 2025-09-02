@@ -14,6 +14,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/', 'Adminogin')->name('admin');
     Route::post('admin-login', 'Login')->name('admin-login');
     Route::post('admin/logout', 'Logout')->name('logout');
+    Route::get('users', 'Users')->name('users');
+
 });
 
 Route::middleware(['auth', Userauth::class, DisableBackBtn::class])->group(function () {
