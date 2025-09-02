@@ -24,6 +24,15 @@
       </a>
     </li>
 
+
+    <li
+      class="menu-item {{ request()->routeIs('users') ? 'active' : '' }}">
+      <a href="{{ route('users') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-group"></i>
+        <div data-i18n="Analytics">Users</div>
+      </a>
+    </li>
+
     <li
       class="menu-item {{ request()->routeIs('dharamshala', 'add-dharamshala', 'edit-dharamshala') ? 'active' : '' }}">
       <a href="{{ route('dharamshala') }}" class="menu-link">
