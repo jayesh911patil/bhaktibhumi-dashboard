@@ -20,6 +20,34 @@ class PartnerwithusCcontroller extends Controller
                 ->addColumn('phone_number', fn($row) => $row->phone_number)
                 ->addColumn('dharamshala', fn($row) => $row->dharamshala)
                 ->addColumn('address', fn($row) => $row->address)
+                ->addColumn('admin_status', function ($row) {
+                    switch ($row->admin_status) {
+                        case 0:
+                            return '<span class="badge bg-warning">Pending</span>';
+                        case 1:
+                            return '<span class="badge bg-success">Approved</span>';
+                        case 2:
+                            return '<span class="badge bg-danger">Rejected</span>';
+                        default:
+                            return '<span class="badge bg-secondary">Unknown</span>';
+                    }
+                })
+                ->addColumn('action', function ($row) {
+                    $viewBtn = '<a href="#" class="btn btn-sm btn-primary me-1">
+                   <i class="bi bi-eye"></i> View
+                </a>';
+
+                    $editBtn = '<a href="#" class="btn btn-sm btn-warning me-1">
+                   <i class="bi bi-pencil-square"></i> Edit
+                </a>';
+
+                    $deleteBtn = '<a href="javascript:void(0)" data-id="' . $row->id . '" class="btn btn-sm btn-danger delete-btn">
+                    <i class="bi bi-trash"></i> Delete
+                  </a>';
+
+                    return $viewBtn . $editBtn . $deleteBtn;
+                })
+                ->rawColumns(['action','admin_status']) // 👈 important for rendering HTML
                 ->make(true);
         }
         return view('partnerwithus.partnerwithus');

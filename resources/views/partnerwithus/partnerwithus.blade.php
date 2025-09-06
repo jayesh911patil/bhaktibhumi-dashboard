@@ -23,6 +23,8 @@
                             <th>Phone Number</th>
                             <th>Dharamshala</th>
                             <th>Address</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                 </table>
@@ -46,7 +48,9 @@
                     { data: 'email', name: 'email', orderable: false },
                     { data: 'phone_number', name: 'phone_number', orderable: false },
                     { data: 'dharamshala', name: 'dharamshala', orderable: false },
-                    { data: 'address', name: 'address', orderable: false }
+                    { data: 'address', name: 'address', orderable: false },
+                    { data: 'admin_status', name: 'admin_status', orderable: false },
+                    { data: 'action', name: 'action', orderable: false }
                 ]
             });
         });
