@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('auth_img')->nullable();
             $table->string('status')->nullable();
             $table->string('admin_status')->nullable();
+            $table->string('otp')->nullable();
+            $table->timestamp('otp_expires_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
