@@ -18,7 +18,7 @@ class PartnerwithusCcontroller extends Controller
                 ->addColumn('name', fn($row) => $row->name)
                 ->addColumn('email', fn($row) => $row->email)
                 ->addColumn('phone_number', fn($row) => $row->phone_number)
-                ->addColumn('dharamshala', fn($row) => $row->dharamshala)
+                ->addColumn('dharamshala_name', fn($row) => $row->dharamshala_name)
                 ->addColumn('address', fn($row) => $row->address)
                 ->addColumn('admin_status', function ($row) {
                     switch ($row->admin_status) {
@@ -33,9 +33,10 @@ class PartnerwithusCcontroller extends Controller
                     }
                 })
                 ->addColumn('action', function ($row) {
-                    $viewBtn = '<a href="#" class="btn btn-sm btn-primary me-1">
-                   <i class="bi bi-eye"></i> View
-                </a>';
+                   $viewBtn = '<a href="' . route('partner-with-us-data', ['partner_with_us_id' => $row->partner_with_us_id]) . '" 
+               class="btn btn-sm btn-primary me-1">
+               <i class="bi bi-eye"></i> View
+            </a>';
 
                     $editBtn = '<a href="#" class="btn btn-sm btn-warning me-1">
                    <i class="bi bi-pencil-square"></i> Edit
@@ -52,4 +53,12 @@ class PartnerwithusCcontroller extends Controller
         }
         return view('partnerwithus.partnerwithus');
     }
+
+    public function ViewPartnerwithus($partner_with_us_id)
+    {
+        $data = PartnerwithusModel::where('partner_with_us_id', $partner_with_us_id)->first();
+        // dd( $data);
+        return view('partnerwithus.view-partner-with-us', compact('data'));
+    }
+        
 }
