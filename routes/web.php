@@ -45,6 +45,7 @@ Route::middleware(['auth', Userauth::class, DisableBackBtn::class])->group(funct
 
     Route::controller(PartnerwithusCcontroller::class)->group(function () {
         Route::get('partner-with-us', 'Partnerwithus')->name('partner-with-us');
+        Route::get('partner-with-us-data/{partner_with_us_id}', 'ViewPartnerwithus')->name('partner-with-us-data');
     });
 });
 

@@ -47,7 +47,7 @@
                     { data: 'name', name: 'name', orderable: false },
                     { data: 'email', name: 'email', orderable: false },
                     { data: 'phone_number', name: 'phone_number', orderable: false },
-                    { data: 'dharamshala', name: 'dharamshala', orderable: false },
+                    { data: 'dharamshala_name', name: 'dharamshala_name', orderable: false },
                     { data: 'address', name: 'address', orderable: false },
                     { data: 'admin_status', name: 'admin_status', orderable: false },
                     { data: 'action', name: 'action', orderable: false }
