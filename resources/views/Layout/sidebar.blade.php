@@ -84,7 +84,7 @@
     </li>
 
     <li
-      class="menu-item  {{ request()->routeIs('partner-with-us') ? 'active' : '' }}">
+      class="menu-item  {{ request()->routeIs('partner-with-us', 'edit-partner-with-us', 'partner-with-us-data') ? 'active' : '' }}">
       <a href="{{ route('partner-with-us') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-group"></i>
         <div data-i18n="Analytics">Partner With Us</div>

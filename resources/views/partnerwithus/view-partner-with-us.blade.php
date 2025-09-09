@@ -52,7 +52,7 @@
                     <strong>Authorize Signature:</strong>
                     <div class="mt-2">
                         <img src="http://127.0.0.1:8000/{{ $data->auth_sign }}" alt="Signature"
-                             style="max-width: 120px; border-radius: 10px; border: 1px solid #ccc;">
+                            style="max-width: 120px; border-radius: 10px; border: 1px solid #ccc;">
                     </div>
                 </div>
 
@@ -60,7 +60,7 @@
                     <strong>Authorize Photo:</strong>
                     <div class="mt-2">
                         <img src="http://127.0.0.1:8000/{{ $data->auth_img }}" alt="Photo"
-                             style="max-width: 120px; border-radius: 10px; border: 1px solid #ccc;">
+                            style="max-width: 120px; border-radius: 10px; border: 1px solid #ccc;">
                     </div>
                 </div>
 
@@ -84,9 +84,22 @@
                     </a>
 
                     <!-- Approve Button -->
-                    <a href="{{ route('popular-rituals') }}" class="btn btn-success">
-                        <i class="bx bx-check-circle me-1"></i> Approve
-                    </a>
+                    <form action="{{ route('update-status-partner-with-us', $data->partner_with_us_id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        <input type="hidden" name="status" value="1">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bx bx-check-circle me-1"></i> Approve
+                        </button>
+                    </form>
+
+                    <!-- Reject Button -->
+                    <form action="{{ route('update-status-partner-with-us', $data->partner_with_us_id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        <input type="hidden" name="status" value="2">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bx bx-x-circle me-1"></i> Reject
+                        </button>
+                    </form>
                 </div>
 
             </div>
