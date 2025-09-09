@@ -46,6 +46,9 @@ Route::middleware(['auth', Userauth::class, DisableBackBtn::class])->group(funct
     Route::controller(PartnerwithusCcontroller::class)->group(function () {
         Route::get('partner-with-us', 'Partnerwithus')->name('partner-with-us');
         Route::get('partner-with-us-data/{partner_with_us_id}', 'ViewPartnerwithus')->name('partner-with-us-data');
+        Route::get('edit-partner-with-us/{partner_with_us_id}', 'Editpartnerwithus')->name('edit-partner-with-us');
+        Route::post('edit-store-partner-with-us/{partner_with_us_id}', 'Editstorepartnerwithus')->name('edit-store-partner-with-us');
+        Route::post('partner/{partner_with_us_id}/status', 'Updatestatuspartnerwithus')->name('update-status-partner-with-us');
     });
 });
 

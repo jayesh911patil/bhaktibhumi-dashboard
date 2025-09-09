@@ -33,22 +33,22 @@ class PartnerwithusCcontroller extends Controller
                     }
                 })
                 ->addColumn('action', function ($row) {
-                   $viewBtn = '<a href="' . route('partner-with-us-data', ['partner_with_us_id' => $row->partner_with_us_id]) . '" 
+                    $viewBtn = '<a href="' . route('partner-with-us-data', ['partner_with_us_id' => $row->partner_with_us_id]) . '" 
                class="btn btn-sm btn-primary me-1">
                <i class="bi bi-eye"></i> View
             </a>';
 
-                    $editBtn = '<a href="#" class="btn btn-sm btn-warning me-1">
+                    $editBtn = '<a href="' . route('edit-partner-with-us', ['partner_with_us_id' => $row->partner_with_us_id]) . '" class="btn btn-sm btn-warning me-1">
                    <i class="bi bi-pencil-square"></i> Edit
                 </a>';
 
-                    $deleteBtn = '<a href="javascript:void(0)" data-id="' . $row->id . '" class="btn btn-sm btn-danger delete-btn">
-                    <i class="bi bi-trash"></i> Delete
-                  </a>';
+                    //     $deleteBtn = '<a href="javascript:void(0)" data-id="' . $row->id . '" class="btn btn-sm btn-danger delete-btn">
+                    //     <i class="bi bi-trash"></i> Delete
+                    //   </a>';
 
-                    return $viewBtn . $editBtn . $deleteBtn;
+                    return $viewBtn . $editBtn;
                 })
-                ->rawColumns(['action','admin_status']) // 👈 important for rendering HTML
+                ->rawColumns(['action', 'admin_status']) // 👈 important for rendering HTML
                 ->make(true);
         }
         return view('partnerwithus.partnerwithus');
@@ -60,5 +60,49 @@ class PartnerwithusCcontroller extends Controller
         // dd( $data);
         return view('partnerwithus.view-partner-with-us', compact('data'));
     }
-        
+
+
+    public function Editpartnerwithus($partner_with_us_id)
+    {
+        $data = PartnerwithusModel::findOrFail($partner_with_us_id);
+        // dd( $data);
+        return view('partnerwithus.edit-partner-with-us', compact('data'));
+    }
+
+    public function Editstorepartnerwithus(Request $request, $partner_with_us_id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'dharamshala_name' => 'required',
+            'phone_number' => 'required|string|max:20',
+            'email' => 'required|email',
+            'address' => 'required',
+            'dharamshala_address' => 'required',
+            'auth_aadhar' => 'required',
+        ]);
+
+         $data = PartnerwithusModel::findOrFail($partner_with_us_id);
+
+        $data->name = $request->name;
+        $data->dharamshala_name = $request->dharamshala_name;
+        $data->phone_number = $request->phone_number;
+        $data->email = $request->email;
+        $data->address = $request->address;
+        $data->dharamshala_address = $request->dharamshala_address;
+        $data->auth_aadhar = $request->auth_aadhar;
+        $data->save();
+        return redirect()->route('partner-with-us')->with('success', 'Partner with us details updated successfully!');
+    }
+
+    public function Updatestatuspartnerwithus(Request $request, $partner_with_us_id)
+    {
+        $partner = PartnerwithusModel::findOrFail($partner_with_us_id);
+        $partner->admin_status = $request->status; // 1 = approve, 2 = reject
+        $partner->save();
+
+    $message = $request->status == 1 ? 'Partner approved successfully!' : 'Partner rejected!';
+    $alertType = $request->status == 1 ? 'success' : 'error';
+
+    return redirect()->route('partner-with-us')->with($alertType, $message);
+    }
 }
