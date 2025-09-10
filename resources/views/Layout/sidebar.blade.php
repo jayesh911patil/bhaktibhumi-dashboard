@@ -58,8 +58,8 @@
     </li>
 
      <li
-      class="menu-item {{ request()->routeIs('users') ? 'active' : '' }}">
-      <a href="{{ route('users') }}" class="menu-link">
+      class="menu-item {{ request()->routeIs('rooms', 'add-rooms') ? 'active' : '' }}">
+      <a href="{{ route('rooms') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-group"></i>
         <div data-i18n="Analytics">Add Room</div>
       </a>

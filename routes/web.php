@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DharamshalaController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RoomController;
 use App\Http\Middleware\Userauth;
 use App\Http\Middleware\DisableBackBtn;
 
@@ -49,6 +50,12 @@ Route::middleware(['auth', Userauth::class, DisableBackBtn::class])->group(funct
         Route::get('edit-partner-with-us/{partner_with_us_id}', 'Editpartnerwithus')->name('edit-partner-with-us');
         Route::post('edit-store-partner-with-us/{partner_with_us_id}', 'Editstorepartnerwithus')->name('edit-store-partner-with-us');
         Route::post('partner/{partner_with_us_id}/status', 'Updatestatuspartnerwithus')->name('update-status-partner-with-us');
+    });
+
+    Route::controller(RoomController::class)->group(function () {
+        Route::get('rooms', 'Room')->name('rooms');
+        Route::get('add-rooms', 'Addrooms')->name('add-rooms');
+        Route::post('add-store-room', 'Addstoreroom')->name('add-store-room');
     });
 });
 
