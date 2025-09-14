@@ -50,6 +50,7 @@ Route::middleware(['auth', Userauth::class, DisableBackBtn::class])->group(funct
         Route::get('edit-partner-with-us/{partner_with_us_id}', 'Editpartnerwithus')->name('edit-partner-with-us');
         Route::post('edit-store-partner-with-us/{partner_with_us_id}', 'Editstorepartnerwithus')->name('edit-store-partner-with-us');
         Route::post('partner/{partner_with_us_id}/status', 'Updatestatuspartnerwithus')->name('update-status-partner-with-us');
+        Route::get('partner-with-us/{id}/download-pdf', 'downloadPdf')->name('partner-with-us.download-pdf');
     });
 
     Route::controller(RoomController::class)->group(function () {

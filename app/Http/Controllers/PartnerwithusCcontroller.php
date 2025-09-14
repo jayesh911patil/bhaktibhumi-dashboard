@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\PartnerwithusModel;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use App\Mail\PartnerApprovedMail;
+use Illuminate\Support\Facades\Mail;
+use PDF; 
 use DataTables;
 
 class PartnerwithusCcontroller extends Controller
@@ -81,7 +87,7 @@ class PartnerwithusCcontroller extends Controller
             'auth_aadhar' => 'required',
         ]);
 
-         $data = PartnerwithusModel::findOrFail($partner_with_us_id);
+        $data = PartnerwithusModel::findOrFail($partner_with_us_id);
 
         $data->name = $request->name;
         $data->dharamshala_name = $request->dharamshala_name;
@@ -94,15 +100,97 @@ class PartnerwithusCcontroller extends Controller
         return redirect()->route('partner-with-us')->with('success', 'Partner with us details updated successfully!');
     }
 
+    // public function Updatestatuspartnerwithus(Request $request, $partner_with_us_id)
+    // {
+    //     $partner = PartnerwithusModel::findOrFail($partner_with_us_id);
+    //     $partner->admin_status = $request->status; // 1 = approve, 2 = reject
+    //     $partner->save();
+
+    //     if ($request->status == 1) {
+    //         $partnerPassword = rand(100000, 999999); // generate 6-digit password (optional)
+
+    //         User::create([
+    //             'name'              => $partner->name,
+    //             'email'             => $partner->email,
+    //             'phone_number'      => $partner->phone_number,
+    //             'password'          => Hash::make($partnerPassword),
+    //             'remember_token'    => Str::random(10),
+    //             'email_verified_at' => now(),
+    //             'user_type'         => '3',
+    //         ]);
+
+    //         Mail::to($partner->email)->send(
+    //         new PartnerApprovedMail($partner->name, $partner->email, $partnerPassword)
+    //     );
+    //     }
+
+    //     $message = $request->status == 1 ? 'Partner approved successfully! Mail sent successfully!' : 'Partner rejected!';
+    //     $alertType = $request->status == 1 ? 'success' : 'error';
+
+    //     return redirect()->route('partner-with-us')->with($alertType, $message);
+    // }
+
     public function Updatestatuspartnerwithus(Request $request, $partner_with_us_id)
     {
         $partner = PartnerwithusModel::findOrFail($partner_with_us_id);
+
+        // If status is already same → show message
+        if ($partner->admin_status == $request->status) {
+            $message = $request->status == 1
+                ? 'Partner is already approved!'
+                : 'Partner is already rejected!';
+            $alertType = 'info';
+
+            return redirect()->route('partner-with-us')->with($alertType, $message);
+        }
+
+        // Update partner status
         $partner->admin_status = $request->status; // 1 = approve, 2 = reject
         $partner->save();
 
-    $message = $request->status == 1 ? 'Partner approved successfully!' : 'Partner rejected!';
-    $alertType = $request->status == 1 ? 'success' : 'error';
+        if ($request->status == 1) {
+            // Generate secure random password
+            $partnerPassword = Str::random(10);
 
-    return redirect()->route('partner-with-us')->with($alertType, $message);
+            // Check if user already exists (avoid duplicate)
+            $userExists = User::where('email', $partner->email)->exists();
+
+            if (! $userExists) {
+                User::create([
+                    'name'              => $partner->name,
+                    'email'             => $partner->email,
+                    'phone_number'      => $partner->phone_number,
+                    'password'          => Hash::make($partnerPassword),
+                    'remember_token'    => Str::random(10),
+                    'email_verified_at' => now(),
+                    'user_type'         => '3',
+                ]);
+
+                // Send email with login details
+                Mail::to($partner->email)->send(
+                    new PartnerApprovedMail($partner->name, $partner->email, $partnerPassword)
+                );
+            }
+
+            $message = 'Partner approved successfully! Mail sent successfully!';
+            $alertType = 'success';
+        } else {
+            $message = 'Partner rejected!';
+            $alertType = 'error';
+        }
+
+        return redirect()->route('partner-with-us')->with($alertType, $message);
     }
+
+
+    public function downloadPdf($id)
+{
+    $data = PartnerwithusModel::findOrFail($id);
+
+    $pdf = PDF::loadView('pdf.partner-details', compact('data'));
+
+    $filename = 'partner_' . Str::slug($data->name, '_') . '.pdf';
+    return $pdf->download($filename);
+
+}
 }

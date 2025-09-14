@@ -100,6 +100,10 @@
                             <i class="bx bx-x-circle me-1"></i> Reject
                         </button>
                     </form>
+
+                    <a href="{{ route('partner-with-us.download-pdf', $data->partner_with_us_id) }}" class="btn btn-info">
+                        <i class="bx bx-download me-1"></i> Download PDF
+                    </a>
                 </div>
 
             </div>
