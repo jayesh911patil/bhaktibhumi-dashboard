@@ -13,21 +13,11 @@ return new class extends Migration
     {
         Schema::create('room_header', function (Blueprint $table) {
             $table->id('room_id');
-            $table->unsignedBigInteger('dharmashala_id');
             $table->string('room_number')->nullable();
-            $table->string('room_title')->nullable();
             $table->string('room_type')->nullable();
-            $table->string('category')->nullable();
-            $table->integer('total_rooms')->default(1);
-            $table->decimal('base_price', 10, 2);
-            $table->decimal('extra_bed_price', 10, 2)->nullable();
-            $table->tinyInteger('max_adults')->default(2)->nullable();;
-            $table->tinyInteger('max_children')->default(0);
-            $table->string('bed_type')->nullable();
-            $table->text('amenities')->nullable();
-            $table->text('description')->nullable();
-            $table->string('floor_number')->nullable();
-            $table->integer('room_size')->nullable();
+            $table->string('ac_no_ac')->nullable();
+            $table->string('bed_capacity')->nullable();
+            $table->string('rent')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

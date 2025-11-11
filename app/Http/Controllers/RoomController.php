@@ -4,59 +4,91 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Room;
+use DataTables;
 
 class RoomController extends Controller
 {
-    public function Room(){
+    public function Room(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Room::latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('room_number', function ($row) {
+                    return $row->room_number;
+                })
+                ->addColumn('room_type', function ($row) {
+                    return $row->room_type;
+                })
+                ->addColumn('ac_no_ac', function ($row) {
+                    return $row->ac_no_ac;
+                })
+                ->addColumn('bed_capacity', function ($row) {
+                    return $row->bed_capacity;
+                })
+                ->addColumn('rent', function ($row) {
+                    return $row->rent;
+                })
+                ->addColumn('action', function ($row) {
+                    $editUrl = "";
+                    $deleteUrl = "";
+
+                    $csrfToken = csrf_token();
+
+                    $actionBtn = '
+                    <a href="' . $editUrl . '" class="edit btn btn-success btn-sm">Edit</a>
+                    <form action="' . $deleteUrl . '" method="POST" style="display:inline-block;">
+                        ' . method_field('DELETE') . '
+                        <input type="hidden" name="_token" value="' . $csrfToken . '">
+                        <button data-url="' . $deleteUrl . '" class="delete btn btn-danger btn-sm delete">Delete</button>
+                    </form>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['image', 'action'])
+                ->make(true);
+        }
         return view('rooms.rooms');
     }
 
-    public function Addrooms(){
+    public function Addrooms()
+    {
         return view('rooms.add-rooms');
     }
 
-    public function Addstoreroom(Request $request){
-        // ✅ Validation
-    $request->validate([
-        'room_number'      => 'required|string|max:50|unique:room_header,room_number',
-        'room_title'       => 'required|string|max:255',
-        'room_type'        => 'required|string|max:50',
-        'category'         => 'required|string|max:50',
-        'total_rooms'      => 'required|integer|min:1',
-        'base_price'       => 'required|numeric|min:0',
-        'extra_bed_price'  => 'required|numeric|min:0',
-        'max_adults'       => 'required|integer|min:1',
-        'max_children'     => 'required|integer|min:0',
-        'bed_type'         => 'required|string|max:100',
-        'amenities'        => 'required|string',
-        'description'      => 'required|string',
-        'floor_number'     => 'required|string|max:50',
-        'room_size'        => 'required|integer|min:0',
-        'image'            => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
-    ]);
+    public function Addstoreroom(Request $request)
+    {
+       
+        $request->validate([
+            'room_number'  => 'required|string|max:20',
+            'room_type'    => 'required',
+            'ac_no_ac'     => 'required',
+            'bed_capacity' => 'required|integer|min:1|max:10',
+            'rent'         => 'required|numeric|min:0|max:999999.99',
+        ], [
+            // 🛡 Custom error messages
+            'room_number.required' => 'Room number is required.',
+            'room_number.unique' => 'This room number already exists.',
+            'room_number.max' => 'Room number can be a maximum of 20 characters.',
+            'room_type.in' => 'Room type must be one of: Standard, Deluxe, Super Deluxe, Executive, or Suite.',
+            'ac_no_ac.in' => 'Please select either AC or Non-AC.',
+            'bed_capacity.integer' => 'Bed capacity must be a valid number.',
+            'bed_capacity.max' => 'Bed capacity cannot exceed 10.',
+            'rent.numeric' => 'Rent must be a numeric value.',
+            'rent.max' => 'Rent value too high.',
+        ]);
 
-    $data = [
-        'dharmashala_id'   => 1, // you can change to dynamic
-        'room_number'      => $request->room_number,
-        'room_title'       => $request->room_title,
-        'room_type'        => $request->room_type,
-        'category'         => $request->category,
-        'total_rooms'      => $request->total_rooms,
-        'base_price'       => $request->base_price,
-        'extra_bed_price'  => $request->extra_bed_price,
-        'max_adults'       => $request->max_adults,
-        'max_children'     => $request->max_children,
-        'bed_type'         => $request->bed_type,
-        'amenities'        => $request->amenities,
-        'description'      => $request->description,
-        'floor_number'     => $request->floor_number,
-        'room_size'        => $request->room_size,
-    ];
+        $data = [
+            'room_number'  => $request->room_number,
+            'room_type'    => $request->room_type,
+            'ac_no_ac'     => $request->ac_no_ac,
+            'bed_capacity' => $request->bed_capacity,
+            'rent'         => $request->rent,
+        ];
 
-    // ✅ Insert into DB
-    Room::create($data);
+        // 🧩 Step 3: Insert into DB
+        Room::create($data);
 
-    // ✅ Redirect with success message
-    return redirect()->route('rooms')->with('success', 'Room added successfully!');
+        // 🧩 Step 4: Redirect with success message
+        return redirect()->route('rooms')->with('success', 'Room added successfully!');
     }
 }
