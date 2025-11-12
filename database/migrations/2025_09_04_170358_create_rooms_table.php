@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('room_header', function (Blueprint $table) {
             $table->id('room_id');
             $table->string('room_number')->nullable();
-            $table->string('room_type')->nullable();
-            $table->string('ac_no_ac')->nullable();
-            $table->string('bed_capacity')->nullable();
+            $table->tinyInteger('room_type')->nullable();
+            $table->tinyInteger('ac_no_ac')->nullable()->comment('1 for AC, 0 for Non-AC');
+            $table->integer('bed_capacity')->nullable();
             $table->string('rent')->nullable();
+            $table->string('dharmashala_id')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

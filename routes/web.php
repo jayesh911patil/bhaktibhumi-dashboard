@@ -57,6 +57,9 @@ Route::middleware(['auth', Userauth::class, DisableBackBtn::class])->group(funct
         Route::get('rooms', 'Room')->name('rooms');
         Route::get('add-rooms', 'Addrooms')->name('add-rooms');
         Route::post('add-store-room', 'Addstoreroom')->name('add-store-room');
+        Route::get('edit-rooms/{room_id}', 'Editrooms')->name('edit-rooms');
+        Route::post('edit-store-room/{room_id}', 'Editstoreroom')->name('edit-store-room');
+        Route::get('delete-room/{room_id}', 'Deletestoreroom')->name('delete-room');
     });
 });
 
