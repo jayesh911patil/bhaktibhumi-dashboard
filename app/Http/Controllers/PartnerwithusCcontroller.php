@@ -158,7 +158,7 @@ class PartnerwithusCcontroller extends Controller
             if (! $userExists) {
                 User::create([
                     'name'              => $partner->name,
-                    'email'             => $partner->email,
+                    'email'             => $partner->email,-
                     'phone_number'      => $partner->phone_number,
                     'password'          => Hash::make($partnerPassword),
                     'remember_token'    => Str::random(10),
