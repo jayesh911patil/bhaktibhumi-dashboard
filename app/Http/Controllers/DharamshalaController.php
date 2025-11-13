@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\DharamshalaModel;
+use App\Models\PartnerwithusModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use App\Mail\PartnerApprovedMail;
+use Illuminate\Support\Facades\Mail;
 use DataTables;
+use App\Models\User;
 
 class DharamshalaController extends Controller
 {
@@ -53,28 +59,78 @@ class DharamshalaController extends Controller
 
     public function Addstoredharamshala(Request $request)
     {
+        // dd($request);
         $validated = $request->validate([
-            'title' => 'required',
-            'image' => 'required',
-            'description' => 'required',
+            'dharamshala_id' => 'required',
+            'name' => 'required|string|max:255',
+            'dharamshala_name' => 'required|string|max:255',
+            'phone_number' => 'required|digits:10',
+            'email' => 'required|email',
+            'address' => 'required|string|max:255',
+            'dharamshala_address' => 'required|string|max:255',
+            'auth_sign' => 'required',
+            'auth_img' => 'required',
+            'auth_aadhar' => 'required|digits:12',
         ]);
 
-        $identification_proofimg = null;
-        if ($request->hasFile('image')) {
-            $path_image = 'dashboard-assets/assets/img/dharamshala/';
-            $file = $request->file('image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path($path_image), $filename);
-            $identification_proofimg = $path_image . $filename;
+        $path = 'website-partner/partner-with-us/';
+        // Handle auth_sign
+        if ($request->hasFile('auth_sign')) {
+            $file1 = $request->file('auth_sign');
+            $filename1 = 'auth_sign' . time() . '.' . $file1->getClientOriginalExtension();
+            $file1->move(public_path($path), $filename1);
+            $auth_sign = $path . $filename1;
+        } else {
+            $auth_sign = null;
         }
 
-        $data = [
-            'title' => $request->title,
-            'image' => $identification_proofimg,
-            'description' => $request->description
-        ];
+        // Handle auth_img
+        if ($request->hasFile('auth_img')) {
+            $file1 = $request->file('auth_img');
+            $filename1 = 'auth_img' . time() . '.' . $file1->getClientOriginalExtension();
+            $file1->move(public_path($path), $filename1);
+            $auth_img = $path . $filename1;
+        } else {
+            $auth_img = null;
+        }
 
-        DharamshalaModel::create($data);
+        $data = PartnerwithusModel::create(array_merge($validated, [
+            'auth_sign' => $auth_sign,
+            'auth_img' => $auth_img,
+            'status' => 1,
+            'admin_status' => 1,
+        ]));
+
+        if ($request) {
+            // Generate secure random password
+            $partnerPassword = Str::random(10);
+
+            // Check if user already exists (avoid duplicate)
+            $userExists = User::where('email', $request->email)->exists();
+
+            if (! $userExists) {
+                User::create([
+                    'name'              => $request->name,
+                    'email'             => $request->email,
+                    'phone_number'      => $request->phone_number,
+                    'password'          => Hash::make($partnerPassword),
+                    'remember_token'    => Str::random(10),
+                    'email_verified_at' => now(),
+                    'user_type'         => '3',
+                ]);
+
+                // Send email with login details
+                Mail::to($request->email)->send(
+                    new PartnerApprovedMail($request->name, $request->email, $partnerPassword)
+                );
+            }
+
+            $message = 'Partner approved successfully! Mail sent successfully!';
+            $alertType = 'success';
+        } else {
+            $message = 'Partner rejected!';
+            $alertType = 'error';
+        }
         return redirect()->route('dharamshala')->with('success', 'Dharamshala Added successfully!');
     }
 
@@ -122,5 +178,4 @@ class DharamshalaController extends Controller
         $dharamshala->delete();
         return redirect()->route('dharamshala')->with('success', 'Dharamshala deleted successfully!');
     }
-
 }

@@ -28,17 +28,10 @@
       class="menu-item {{ request()->routeIs('dharamshala', 'add-dharamshala', 'edit-dharamshala') ? 'active' : '' }}">
       <a href="{{ route('dharamshala') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-building-house"></i>
-        <div data-i18n="Analytics">Registrations</div>
-      </a>
-    </li>
-
-      <li
-      class="menu-item ">
-      <a href="#" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-building-house"></i>
         <div data-i18n="Analytics">Dharamshala</div>
       </a>
     </li>
+
 
 
     <li
@@ -49,13 +42,7 @@
       </a>
     </li>
 
-     <li
-      class="menu-item ">
-      <a href="#" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-group"></i>
-        <div data-i18n="Analytics">Bookings</div>
-      </a>
-    </li>
+    
 
      <li
       class="menu-item {{ request()->routeIs('rooms', 'add-rooms') ? 'active' : '' }}">
@@ -65,13 +52,7 @@
       </a>
     </li>
 
-       <li
-      class="menu-item {{ request()->routeIs('users') ? 'active' : '' }}">
-      <a href="{{ route('users') }}" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-group"></i>
-        <div data-i18n="Analytics">Room Types</div>
-      </a>
-    </li>
+     
 
 
 
