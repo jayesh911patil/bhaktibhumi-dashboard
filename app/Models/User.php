@@ -23,7 +23,8 @@ class User extends Authenticatable
         'password',
         'email_verified_at',
         'remember_token',
-        'user_type'
+        'user_type', 
+        'partner_with_us_id'
     ];
 
     /**

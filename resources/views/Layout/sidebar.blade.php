@@ -24,15 +24,19 @@
       </a>
     </li>
 
-     <li
+    @if (auth()->user()->user_type == 1)
+    <li
       class="menu-item {{ request()->routeIs('dharamshala', 'add-dharamshala', 'edit-dharamshala') ? 'active' : '' }}">
       <a href="{{ route('dharamshala') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-building-house"></i>
         <div data-i18n="Analytics">Dharamshala</div>
       </a>
     </li>
+    @endif
 
 
+
+    @if (auth()->user()->user_type == 1)
 
     <li
       class="menu-item {{ request()->routeIs('users') ? 'active' : '' }}">
@@ -42,9 +46,11 @@
       </a>
     </li>
 
-    
+    @endif
 
-     <li
+
+
+    <li
       class="menu-item {{ request()->routeIs('rooms', 'add-rooms') ? 'active' : '' }}">
       <a href="{{ route('rooms') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-group"></i>
@@ -52,10 +58,10 @@
       </a>
     </li>
 
-     
 
 
 
+    @if (auth()->user()->user_type == 1)
     <li
       class="menu-item  {{ request()->routeIs('popular-rituals', 'add-popular-rituals', 'edit-popular-rituals') ? 'active' : '' }}">
       <a href="{{ route('popular-rituals') }}" class="menu-link">
@@ -64,6 +70,10 @@
       </a>
     </li>
 
+    @endif
+
+    @if (auth()->user()->user_type == 1)
+
     <li
       class="menu-item  {{ request()->routeIs('partner-with-us', 'edit-partner-with-us', 'partner-with-us-data') ? 'active' : '' }}">
       <a href="{{ route('partner-with-us') }}" class="menu-link">
@@ -71,6 +81,7 @@
         <div data-i18n="Analytics">Partner With Us</div>
       </a>
     </li>
+    @endif
   </ul>
 
 </aside>

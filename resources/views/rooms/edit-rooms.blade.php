@@ -92,6 +92,30 @@
                             @enderror
                         </div>
 
+                        <div class="mb-3">
+                            <label class="form-label">Old Images</label><br>
+
+                            @php
+                            $oldImages = json_decode($room->room_imgs, true) ?? [];
+                            @endphp
+
+                            @foreach($oldImages as $img)
+                            <div class="d-inline-block text-center me-2">
+                                <img src="{{ asset('website-partner/room-imgs/'.$img) }}"
+                                    width="80" height="80"
+                                    style="object-fit: cover; border:1px solid #ccc; border-radius:5px;">
+                                <br>
+                                <label>
+                                    <input type="checkbox" name="delete_images[]" value="{{ $img }}"> Delete
+                                </label>
+                            </div>
+                            @endforeach
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Add New Images</label>
+                            <input type="file" class="form-control" name="room_imgs[]" multiple>
+                        </div>
 
                         <!-- Submit & Cancel -->
                         <button type="submit" class="btn btn-primary">
