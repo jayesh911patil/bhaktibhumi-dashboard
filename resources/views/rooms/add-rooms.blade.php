@@ -31,10 +31,10 @@
                             @enderror
                         </div>
 
-                        
 
 
-                         <!-- Room Type -->
+
+                        <!-- Room Type -->
                         <div class="mb-3">
                             <label class="form-label">Room Type <span class="text-danger">*</span></label>
                             <select name="room_type" class="form-control">
@@ -46,7 +46,7 @@
                                 <option value="Suite" {{ old('room_type') == 'Suite' ? 'selected' : '' }}>Suite</option> -->
 
                                 @foreach(config('constants.ROOM_TYPE') as $key => $type)
-                                    <option value="{{ $key }}" {{ old('room_type') == $type ? 'selected' : '' }}>{{ $type }}</option>
+                                <option value="{{ $key }}" {{ old('room_type') == $type ? 'selected' : '' }}>{{ $type }}</option>
                                 @endforeach
                             </select>
                             @error('room_type')
@@ -67,7 +67,7 @@
                             @enderror
                         </div>
 
-                       
+
 
                         <!-- Bed capacity -->
                         <div class="mb-3">
@@ -89,7 +89,12 @@
                             @enderror
                         </div>
 
-                        
+                        <div class="mb-3">
+                            <label class="form-label">Room Images <span class="text-danger">*</span></label>
+                            <input type="file" class="form-control" name="room_imgs[]" multiple>
+                        </div>
+
+
                         <!-- Submit & Cancel -->
                         <button type="submit" class="btn btn-primary">
                             <i class="bx bx-send"></i> Submit

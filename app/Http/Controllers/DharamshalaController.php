@@ -24,30 +24,19 @@ class DharamshalaController extends Controller
     {
 
         if ($request->ajax()) {
-            $data = DharamshalaModel::latest()->get();
+            $data = PartnerwithusModel::latest()->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('image', function ($row) {
-                    $imgUrl = asset($row->image);
+                ->addColumn('dharmashala_image', function ($row) {
+                    $imgUrl = asset($row->dharmashala_image);
                     return "<img src='{$imgUrl}' width='100' height='100' />";
                 })
-                ->addColumn('title', fn($row) => $row->title)
-                ->addColumn('description', function ($row) {
-                    return '<button type="button" class="btn btn-sm btns view-description" data-bs-toggle="modal" data-bs-target="#descriptionModal" data-description="' . e($row->description) . '">View</button>';
+                ->addColumn('dharamshala_name', fn($row) => $row->dharamshala_name)
+                ->addColumn('dharamshala_address', function ($row) {
+                    return '<button type="button" class="btn btn-sm btns view-description" data-bs-toggle="modal" data-bs-target="#descriptionModal" data-description="' . e($row->dharamshala_address) . '">View</button>';
                 })
-                ->addColumn('action', function ($row) {
-                    $editUrl = route('edit-dharamshala', ['dharamshala_id' => $row->dharamshala_id]);
-                    $deleteUrl = route('delete-dharamshala', ['dharamshala_id' => $row->dharamshala_id]);
-
-                    $actionBtn = '
-        <a href="' . $editUrl . '" class="btn btn-success btn-sm">Edit</a>
-        <button class="btn btn-danger btn-sm sweet-delete-btn" data-url="' . $deleteUrl . '">Delete</button>
-    ';
-
-                    return $actionBtn;
-                })
-                ->rawColumns(['image', 'description', 'action'])
+                ->rawColumns(['dharmashala_image', 'dharamshala_address'])
                 ->make(true);
         }
     }
@@ -70,35 +59,49 @@ class DharamshalaController extends Controller
             'dharamshala_address' => 'required|string|max:255',
             'auth_sign' => 'required',
             'auth_img' => 'required',
+            'dharmashala_image' => 'required',
             'auth_aadhar' => 'required|digits:12',
         ]);
 
         $path = 'website-partner/partner-with-us/';
+
         // Handle auth_sign
         if ($request->hasFile('auth_sign')) {
-            $file1 = $request->file('auth_sign');
-            $filename1 = 'auth_sign' . time() . '.' . $file1->getClientOriginalExtension();
-            $file1->move(public_path($path), $filename1);
-            $auth_sign = $path . $filename1;
+            $file = $request->file('auth_sign');
+            $filename = 'auth_sign_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path($path), $filename);
+            $auth_sign = $path . $filename;
         } else {
             $auth_sign = null;
         }
 
         // Handle auth_img
         if ($request->hasFile('auth_img')) {
-            $file1 = $request->file('auth_img');
-            $filename1 = 'auth_img' . time() . '.' . $file1->getClientOriginalExtension();
-            $file1->move(public_path($path), $filename1);
-            $auth_img = $path . $filename1;
+            $file = $request->file('auth_img');
+            $filename = 'auth_img_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path($path), $filename);
+            $auth_img = $path . $filename;
         } else {
             $auth_img = null;
         }
 
+        // Handle dharmashala_image
+        if ($request->hasFile('dharmashala_image')) {
+            $file = $request->file('dharmashala_image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path($path), $filename);
+            $imagePath = $path . $filename;
+        } else {
+            $imagePath = null;
+        }
+
+
         $data = PartnerwithusModel::create(array_merge($validated, [
             'auth_sign' => $auth_sign,
             'auth_img' => $auth_img,
-            'status' => 1,
+            'status' => 2,
             'admin_status' => 1,
+            'dharmashala_image' => $imagePath,
         ]));
 
         if ($request) {
@@ -117,6 +120,7 @@ class DharamshalaController extends Controller
                     'remember_token'    => Str::random(10),
                     'email_verified_at' => now(),
                     'user_type'         => '3',
+                    'partner_with_us_id' => $data->partner_with_us_id,
                 ]);
 
                 // Send email with login details

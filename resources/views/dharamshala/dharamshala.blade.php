@@ -22,10 +22,9 @@
                     <thead>
                         <tr>
                             <th>Sr No</th>
-                            <th>Title</th>
-                            <th>Description</th>
+                            <th>Dharamshala Name</th>
+                            <th>Dharamshala Address</th>
                             <th>Image</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                 </table>
@@ -67,10 +66,9 @@
                 ajax: '{{ route('dharamshala.data') }}',
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false },
-                    { data: 'title', name: 'title', orderable: false },
-                    { data: 'description', name: 'description', orderable: false },
-                    { data: 'image', name: 'image', orderable: false },
-                    { data: 'action', name: 'action', orderable: false, searchable: true }
+                    { data: 'dharamshala_name', name: 'dharamshala_name', orderable: false },
+                    { data: 'dharamshala_address', name: 'dharamshala_address', orderable: false },
+                    { data: 'dharmashala_image', name: 'dharmashala_image', orderable: false }
                 ]
             });
 
