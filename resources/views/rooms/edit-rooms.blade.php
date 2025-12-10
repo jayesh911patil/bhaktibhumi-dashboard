@@ -101,7 +101,7 @@
 
                             @foreach($oldImages as $img)
                             <div class="d-inline-block text-center me-2">
-                                <img src="{{ asset('website-partner/room-imgs/'.$img) }}"
+                                <img src="{{ asset('dashboard-partner/room-imgs/'.$img) }}"
                                     width="80" height="80"
                                     style="object-fit: cover; border:1px solid #ccc; border-radius:5px;">
                                 <br>
