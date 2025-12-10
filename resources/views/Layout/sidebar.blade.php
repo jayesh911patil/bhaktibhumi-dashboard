@@ -46,6 +46,14 @@
       </a>
     </li>
 
+    <li
+      class="menu-item {{ request()->routeIs('vip-bookings') ? 'active' : '' }}">
+      <a href="{{ route('vip-bookings') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-group"></i>
+        <div data-i18n="Analytics">Vip Booking</div>
+      </a>
+    </li>
+
     @endif
 
 

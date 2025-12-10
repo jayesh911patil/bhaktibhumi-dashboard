@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DharamshalaController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\VipbookingController;
 use App\Http\Controllers\RoomController;
 use App\Http\Middleware\Userauth;
 use App\Http\Middleware\DisableBackBtn;
@@ -60,6 +61,15 @@ Route::middleware(['auth', Userauth::class, DisableBackBtn::class])->group(funct
         Route::get('edit-rooms/{room_id}', 'Editrooms')->name('edit-rooms');
         Route::post('edit-store-room/{room_id}', 'Editstoreroom')->name('edit-store-room');
         Route::get('delete-room/{room_id}', 'Deletestoreroom')->name('delete-room');
+    });
+
+    Route::controller(VipbookingController::class)->group(function () {
+        Route::get('vip-bookings', 'Vipbooking')->name('vip-bookings');
+        Route::get('add-vip-bookings', 'Addvipbooking')->name('add-vip-bookings');
+        Route::post('add-store-vip-bookings', 'Addstorevipbooking')->name('add-store-vip-bookings');
+        Route::get('edit-vip-bookings/{vip_booking_id}', 'Editvipbooking')->name('edit-vip-bookings');
+        Route::post('edit-store-vip-bookings/{vip_booking_id}', 'Editstorevipbooking')->name('edit-store-vip-bookings');
+        Route::get('delete-vip-bookings/{vip_booking_id}', 'Deletevipbooking')->name('delete-vip-bookings');
     });
 });
 

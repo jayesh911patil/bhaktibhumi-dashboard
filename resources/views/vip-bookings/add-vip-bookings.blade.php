@@ -1,21 +1,21 @@
 @extends('Layout.main')
-@section('title', 'Add Popular Rituals')
+@section('title', 'Add Vip Booking')
 
 @section('middle_content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('popular-rituals') }}"
-                    class="text-dark">Popular Rituals</a> /</span> Add Popular Rituals</h4>
+                    class="text-dark">Vip Booking</a> /</span> Add Vip Booking</h4>
 
         <!-- Basic Layout -->
         <div class="row">
             <div class="col-xl">
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Add Popular Ritual</h5>
+                        <h5 class="mb-0">Add Vip Booking</h5>
 
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('add-store-popular-rituals') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('add-store-vip-bookings') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <!-- Title -->
                             <div class="mb-3">
@@ -68,7 +68,7 @@
                             </button>
 
                             <button type="button" class="btn btn-secondary">
-                                <a class="text-white" href="{{ route('popul ar-rituals') }}"> <i class="bx bx-x"></i> Cancel</a>
+                                <a class="text-white" href="{{ route('vip-bookings') }}"> <i class="bx bx-x"></i> Cancel</a>
                             </button>
                         </form>
 

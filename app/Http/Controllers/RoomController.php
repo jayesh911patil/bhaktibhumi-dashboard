@@ -87,7 +87,7 @@ class RoomController extends Controller
                 $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
                 // Your custom folder
-                $path = public_path('website-partner/room-imgs');
+                $path = public_path('dashboard-partner/room-imgs');
 
                 // Create folder if not exists
                 if (!file_exists($path)) {
@@ -155,7 +155,7 @@ class RoomController extends Controller
     $oldImages = json_decode($room->room_imgs, true) ?? [];
 
     // Your required image upload folder
-    $uploadPath = public_path('website-partner/room-imgs');
+    $uploadPath = public_path('dashboard-partner/room-imgs');
 
     // Create folder if missing
     if (!file_exists($uploadPath)) {

@@ -63,7 +63,7 @@ class DharamshalaController extends Controller
             'auth_aadhar' => 'required|digits:12',
         ]);
 
-        $path = 'website-partner/partner-with-us/';
+        $path = 'dashboard-partner/partner-with-us/';
 
         // Handle auth_sign
         if ($request->hasFile('auth_sign')) {
