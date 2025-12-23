@@ -66,6 +66,14 @@
       </a>
     </li>
 
+    <li
+      class="menu-item {{ request()->routeIs('booking') ? 'active' : '' }}">
+      <a href="{{ route('booking') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-group"></i>
+        <div data-i18n="Analytics">Bookings</div>
+      </a>
+    </li>
+
 
 
 

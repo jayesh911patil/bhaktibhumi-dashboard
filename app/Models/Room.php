@@ -11,4 +11,9 @@ class Room extends Model
     protected $table = 'room_header';
     protected $primaryKey = 'room_id';
     protected $guarded = [];
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'room_id', 'room_id');
+    }
 }

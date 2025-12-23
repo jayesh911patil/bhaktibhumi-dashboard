@@ -8,6 +8,7 @@ use App\Http\Controllers\DharamshalaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VipbookingController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\BookingController;
 use App\Http\Middleware\Userauth;
 use App\Http\Middleware\DisableBackBtn;
 
@@ -70,6 +71,11 @@ Route::middleware(['auth', Userauth::class, DisableBackBtn::class])->group(funct
         Route::get('edit-vip-bookings/{vip_booking_id}', 'Editvipbooking')->name('edit-vip-bookings');
         Route::post('edit-store-vip-bookings/{vip_booking_id}', 'Editstorevipbooking')->name('edit-store-vip-bookings');
         Route::get('delete-vip-bookings/{vip_booking_id}', 'Deletevipbooking')->name('delete-vip-bookings');
+    });
+
+    Route::controller(BookingController::class)->group(function () {
+        Route::get('booking', 'Booking')->name('booking');
+        
     });
 });
 
